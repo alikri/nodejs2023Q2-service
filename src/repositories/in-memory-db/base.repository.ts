@@ -4,7 +4,7 @@ import { v4 as uuidv4 } from 'uuid';
 export class BaseRepository<T extends { id: string }>
   implements AbstractCrudRepository<T, string>
 {
-  private entities: Map<string, T> = new Map();
+  protected entities: Map<string, T> = new Map();
 
   async create(item: Omit<T, 'id'>): Promise<T> {
     const id = uuidv4();
