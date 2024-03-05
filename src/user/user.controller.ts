@@ -61,6 +61,11 @@ export class UserController {
       id,
       updatePasswordDto,
     );
+
+    if (!updatedUser) {
+      throw new NotFoundException(`User with ID ${id} not found`);
+    }
+
     return new UserResponseDto(updatedUser);
   }
 

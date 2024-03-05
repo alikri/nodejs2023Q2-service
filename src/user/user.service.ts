@@ -29,6 +29,7 @@ export class UserService {
     userUpdates: Partial<Omit<User, 'id'>>,
   ): Promise<User> {
     const existingUser = await this.findUserById(id);
+
     const updatedUser = await this.userRepository.update(id, {
       ...existingUser,
       ...userUpdates,
@@ -49,7 +50,8 @@ export class UserService {
     id: string,
     updatePasswordDto: UpdatePasswordDto,
   ): Promise<User> {
-    const user = await this.findUserById(id);
+    const user = await this.userRepository.findById(id);
+
     if (!user) {
       throw new NotFoundException(`User with ID ${id} not found`);
     }
