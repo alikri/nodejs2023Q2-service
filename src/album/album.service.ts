@@ -22,10 +22,10 @@ export class AlbumService {
     return this.albumRepository.findAll();
   }
 
-  async getAlbumById(id: string): Promise<Album> {
+  async getAlbumById(id: string): Promise<Album | null> {
     const album = await this.albumRepository.findById(id);
     if (!album) {
-      throw new NotFoundException(`Album with ID ${id} not found`);
+      return null;
     }
     return album;
   }

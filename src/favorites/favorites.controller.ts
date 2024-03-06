@@ -7,6 +7,7 @@ import {
   Post,
   HttpException,
   HttpStatus,
+  NotFoundException,
 } from '@nestjs/common';
 import { FavoritesService } from './favorites.service';
 
@@ -27,6 +28,17 @@ export class FavoritesController {
     )
     trackId: string,
   ): Promise<any> {
+    const track = await this.favoritesService.checkEntityExists(
+      'tracks',
+      trackId,
+    );
+
+    if (!track) {
+      throw new NotFoundException(
+        HttpStatus.UNPROCESSABLE_ENTITY,
+        'Track does not exist',
+      );
+    }
     return this.favoritesService.addEntityToFavorites('tracks', trackId);
   }
 
@@ -38,13 +50,17 @@ export class FavoritesController {
     )
     albumId: string,
   ): Promise<any> {
-    // const album = await this.albumService.getAlbumById(albumId);
-    // if (!album) {
-    //   throw new NotFoundException(
-    //     HttpStatus.UNPROCESSABLE_ENTITY,
-    //     'Album does not exist',
-    //   );
-    // }
+    const album = await this.favoritesService.checkEntityExists(
+      'albums',
+      albumId,
+    );
+
+    if (!album) {
+      throw new NotFoundException(
+        HttpStatus.UNPROCESSABLE_ENTITY,
+        'Album does not exist',
+      );
+    }
 
     this.favoritesService.addEntityToFavorites('albums', albumId);
     return {
@@ -61,6 +77,17 @@ export class FavoritesController {
     )
     artistId: string,
   ): Promise<any> {
+    const artist = await this.favoritesService.checkEntityExists(
+      'artists',
+      artistId,
+    );
+
+    if (!artist) {
+      throw new NotFoundException(
+        HttpStatus.UNPROCESSABLE_ENTITY,
+        'Artist does not exist',
+      );
+    }
     this.favoritesService.addEntityToFavorites('artists', artistId);
     return {
       statusCode: HttpStatus.CREATED,

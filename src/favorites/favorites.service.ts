@@ -54,4 +54,23 @@ export class FavoritesService {
   updateFavorites(updateFavoritesDto: UpdateFavoritesDto) {
     return this.favoritesRepository.updateFavorites(updateFavoritesDto);
   }
+
+  async checkEntityExists(
+    entityType: 'artists' | 'albums' | 'tracks',
+    id: string,
+  ): Promise<boolean> {
+    switch (entityType) {
+      case 'artists':
+        const artist = await this.artistService.getArtistById(id);
+        return !!artist;
+      case 'albums':
+        const album = await this.albumService.getAlbumById(id);
+        return !!album;
+      case 'tracks':
+        const track = await this.trackService.getTrackById(id);
+        return !!track;
+      default:
+        throw new Error(`Unsupported entity type: ${entityType}`);
+    }
+  }
 }
