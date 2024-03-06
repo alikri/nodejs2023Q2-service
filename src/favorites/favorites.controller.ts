@@ -7,6 +7,7 @@ import {
   Post,
   HttpException,
   HttpStatus,
+  HttpCode,
 } from '@nestjs/common';
 import { FavoritesService } from './favorites.service';
 
@@ -93,46 +94,39 @@ export class FavoritesController {
       message: 'Artist added to favorites',
     };
   }
-
   @Delete('track/:id')
+  @HttpCode(HttpStatus.NO_CONTENT)
   async removeTrackFromFavorites(
     @Param(
       'id',
       new ParseUUIDPipe({ errorHttpStatusCode: HttpStatus.BAD_REQUEST }),
     )
     trackId: string,
-  ): Promise<any> {
+  ): Promise<void> {
     await this.favoritesService.removeEntityFromFavorites('tracks', trackId);
-    throw new HttpException('No Content', HttpStatus.NO_CONTENT);
   }
 
   @Delete('album/:id')
+  @HttpCode(HttpStatus.NO_CONTENT)
   async removeAlbumFromFavorites(
     @Param(
       'id',
       new ParseUUIDPipe({ errorHttpStatusCode: HttpStatus.BAD_REQUEST }),
     )
     albumId: string,
-  ): Promise<any> {
-    this.favoritesService.removeEntityFromFavorites('albums', albumId);
-    return {
-      statusCode: HttpStatus.NO_CONTENT,
-      message: 'Album removed from favorites',
-    };
+  ): Promise<void> {
+    await this.favoritesService.removeEntityFromFavorites('albums', albumId);
   }
 
   @Delete('artist/:id')
+  @HttpCode(HttpStatus.NO_CONTENT)
   async removeArtistFromFavorites(
     @Param(
       'id',
       new ParseUUIDPipe({ errorHttpStatusCode: HttpStatus.BAD_REQUEST }),
     )
     artistId: string,
-  ): Promise<any> {
-    this.favoritesService.removeEntityFromFavorites('artists', artistId);
-    return {
-      statusCode: HttpStatus.NO_CONTENT,
-      message: 'Artist removed from favorites',
-    };
+  ): Promise<void> {
+    await this.favoritesService.removeEntityFromFavorites('artists', artistId);
   }
 }
