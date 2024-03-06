@@ -63,7 +63,7 @@ export class TrackController {
       updateTrackDto,
     );
     if (!updatedTrack) {
-      throw new NotFoundException('Track not found');
+      throw new NotFoundException(HttpStatus.NOT_FOUND);
     }
     return updatedTrack;
   }
@@ -78,8 +78,9 @@ export class TrackController {
   ): Promise<void> {
     const track = await this.trackService.getTrackById(id);
     if (!track) {
-      throw new NotFoundException('Track not found');
+      throw new NotFoundException(HttpStatus.NOT_FOUND);
     }
     await this.trackService.deleteTrack(id);
+    throw new HttpException('No Content', HttpStatus.NO_CONTENT);
   }
 }
