@@ -32,4 +32,11 @@ export class TrackService {
     await this.getTrackById(id);
     await this.trackRepository.delete(id);
   }
+
+  async setAlbumIdToNullForAlbum(albumId: string): Promise<void> {
+    const tracks = await this.trackRepository.findAllTracksByAlbumId(albumId);
+    for (const track of tracks) {
+      await this.trackRepository.update(track.id, { ...track, albumId: null });
+    }
+  }
 }
