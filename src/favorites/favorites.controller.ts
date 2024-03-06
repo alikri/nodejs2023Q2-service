@@ -7,7 +7,6 @@ import {
   Post,
   HttpException,
   HttpStatus,
-  NotFoundException,
 } from '@nestjs/common';
 import { FavoritesService } from './favorites.service';
 
@@ -34,9 +33,9 @@ export class FavoritesController {
     );
 
     if (!track) {
-      throw new NotFoundException(
-        HttpStatus.UNPROCESSABLE_ENTITY,
+      throw new HttpException(
         'Track does not exist',
+        HttpStatus.UNPROCESSABLE_ENTITY,
       );
     }
     return this.favoritesService.addEntityToFavorites('tracks', trackId);
@@ -56,9 +55,9 @@ export class FavoritesController {
     );
 
     if (!album) {
-      throw new NotFoundException(
-        HttpStatus.UNPROCESSABLE_ENTITY,
+      throw new HttpException(
         'Album does not exist',
+        HttpStatus.UNPROCESSABLE_ENTITY,
       );
     }
 
@@ -83,9 +82,9 @@ export class FavoritesController {
     );
 
     if (!artist) {
-      throw new NotFoundException(
-        HttpStatus.UNPROCESSABLE_ENTITY,
+      throw new HttpException(
         'Artist does not exist',
+        HttpStatus.UNPROCESSABLE_ENTITY,
       );
     }
     this.favoritesService.addEntityToFavorites('artists', artistId);
