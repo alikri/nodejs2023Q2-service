@@ -25,8 +25,6 @@ export class TrackService {
 
   async updateTrack(id: string, trackUpdates: Partial<Track>): Promise<Track> {
     const track = this.trackRepository.update(id, { id, ...trackUpdates });
-
-    if (!track) throw new NotFoundException(`Track with ID ${id} not found`);
     return track;
   }
 
