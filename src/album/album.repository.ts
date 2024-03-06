@@ -19,4 +19,10 @@ export class AlbumRepository extends BaseRepository<Album> {
     this.entities.set(id, newItem);
     return Promise.resolve(newItem);
   }
+
+  async findAllAlbumsByArtistId(artistId: string): Promise<Album[]> {
+    return Array.from(this.entities.values()).filter(
+      (album) => album.artistId === artistId,
+    );
+  }
 }

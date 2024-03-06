@@ -25,4 +25,10 @@ export class TrackRepository extends BaseRepository<Track> {
       (track) => track.albumId === albumId,
     );
   }
+
+  async findAllTracksByArtistId(artistId: string): Promise<Track[]> {
+    return Array.from(this.entities.values()).filter(
+      (track) => track.artistId === artistId,
+    );
+  }
 }

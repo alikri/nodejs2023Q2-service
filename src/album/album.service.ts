@@ -50,8 +50,14 @@ export class AlbumService {
       throw new NotFoundException(`Album with ID ${id} not found`);
     }
 
-    await this.trackService.setAlbumIdToNullForAlbum(id);
-
     await this.albumRepository.delete(id);
+    await this.trackService.setAlbumIdToNullForAlbum(id);
+  }
+
+  async setArtistIdToNullForAlbum(artistId: string): Promise<void> {
+    const tracks = await this.albumRepository.findAllAlbumsByArtistId(artistId);
+    tracks.forEach(async (track) => {
+      await this.albumRepository.update(track.id, { ...track, artistId: null });
+    });
   }
 }
