@@ -1,17 +1,6 @@
 {
   "openapi": "3.0.0",
   "paths": {
-    "/": {
-      "get": {
-        "operationId": "AppController_getHello",
-        "parameters": [],
-        "responses": {
-          "200": {
-            "description": ""
-          }
-        }
-      }
-    },
     "/user": {
       "get": {
         "operationId": "UserController_getAllUsers",
@@ -88,20 +77,11 @@
         ],
         "requestBody": {
           "required": true,
+          "description": "Provide old and new password",
           "content": {
             "application/json": {
               "schema": {
-                "type": "object",
-                "properties": {
-                  "oldPassword": {
-                    "type": "string",
-                    "example": "nickname12345!"
-                  },
-                  "newPassword": {
-                    "type": "string",
-                    "example": "nickname54321!"
-                  }
-                }
+                "$ref": "#/components/schemas/UpdatePasswordDto"
               }
             }
           }
@@ -339,7 +319,7 @@
             "required": true,
             "in": "path",
             "example": "a0a659c7-95c8-4c4b-9c5a-69d4e36ba578",
-            "description": "The UUID of the user",
+            "description": "The UUID of the track",
             "schema": {
               "type": "string"
             }
@@ -440,7 +420,7 @@
             "required": true,
             "in": "path",
             "example": "a0a659c7-95c8-4c4b-9c5a-69d4e36ba578",
-            "description": "The UUID of the user",
+            "description": "The UUID of the album",
             "schema": {
               "type": "string"
             }
@@ -472,6 +452,8 @@
             "name": "id",
             "required": true,
             "in": "path",
+            "example": "a0a659c7-95c8-4c4b-9c5a-69d4e36ba578",
+            "description": "The UUID of the track",
             "schema": {
               "type": "string"
             }
@@ -490,6 +472,8 @@
             "name": "id",
             "required": true,
             "in": "path",
+            "example": "a0a659c7-95c8-4c4b-9c5a-69d4e36ba578",
+            "description": "The UUID of the track",
             "schema": {
               "type": "string"
             }
@@ -510,6 +494,8 @@
             "name": "id",
             "required": true,
             "in": "path",
+            "example": "a0a659c7-95c8-4c4b-9c5a-69d4e36ba578",
+            "description": "The UUID of the album",
             "schema": {
               "type": "string"
             }
@@ -528,6 +514,8 @@
             "name": "id",
             "required": true,
             "in": "path",
+            "example": "a0a659c7-95c8-4c4b-9c5a-69d4e36ba578",
+            "description": "The UUID of the album",
             "schema": {
               "type": "string"
             }
@@ -548,6 +536,8 @@
             "name": "id",
             "required": true,
             "in": "path",
+            "example": "a0a659c7-95c8-4c4b-9c5a-69d4e36ba578",
+            "description": "The UUID of the artist",
             "schema": {
               "type": "string"
             }
@@ -566,6 +556,8 @@
             "name": "id",
             "required": true,
             "in": "path",
+            "example": "a0a659c7-95c8-4c4b-9c5a-69d4e36ba578",
+            "description": "The UUID of the artist",
             "schema": {
               "type": "string"
             }
@@ -589,6 +581,25 @@
   "servers": [],
   "components": {
     "schemas": {
+      "UpdatePasswordDto": {
+        "type": "object",
+        "properties": {
+          "oldPassword": {
+            "type": "string",
+            "example": "OldPassword123!",
+            "description": "The current password of the user."
+          },
+          "newPassword": {
+            "type": "string",
+            "example": "NewPassword456!",
+            "description": "The new password for the user. Must not be empty."
+          }
+        },
+        "required": [
+          "oldPassword",
+          "newPassword"
+        ]
+      },
       "CreateTrackDto": {
         "type": "object",
         "properties": {

@@ -28,6 +28,12 @@ export class AlbumController {
   }
 
   @Get(':id')
+  @ApiParam({
+    name: 'id',
+    type: 'string',
+    example: 'a0a659c7-95c8-4c4b-9c5a-69d4e36ba578',
+    description: 'The UUID of the album',
+  })
   async getArtistById(
     @Param(
       'id',

@@ -10,6 +10,7 @@ import {
   HttpCode,
 } from '@nestjs/common';
 import { FavoritesService } from './favorites.service';
+import { ApiParam } from '@nestjs/swagger';
 
 @Controller('favs')
 export class FavoritesController {
@@ -21,6 +22,12 @@ export class FavoritesController {
   }
 
   @Post('track/:id')
+  @ApiParam({
+    name: 'id',
+    type: 'string',
+    example: 'a0a659c7-95c8-4c4b-9c5a-69d4e36ba578',
+    description: 'The UUID of the track',
+  })
   async addTrackToFavorites(
     @Param(
       'id',
@@ -43,6 +50,12 @@ export class FavoritesController {
   }
 
   @Post('album/:id')
+  @ApiParam({
+    name: 'id',
+    type: 'string',
+    example: 'a0a659c7-95c8-4c4b-9c5a-69d4e36ba578',
+    description: 'The UUID of the album',
+  })
   async addAlbumToFavorites(
     @Param(
       'id',
@@ -70,6 +83,12 @@ export class FavoritesController {
   }
 
   @Post('artist/:id')
+  @ApiParam({
+    name: 'id',
+    type: 'string',
+    example: 'a0a659c7-95c8-4c4b-9c5a-69d4e36ba578',
+    description: 'The UUID of the artist',
+  })
   async addArtistToFavorites(
     @Param(
       'id',
@@ -95,6 +114,12 @@ export class FavoritesController {
     };
   }
   @Delete('track/:id')
+  @ApiParam({
+    name: 'id',
+    type: 'string',
+    example: 'a0a659c7-95c8-4c4b-9c5a-69d4e36ba578',
+    description: 'The UUID of the track',
+  })
   @HttpCode(HttpStatus.NO_CONTENT)
   async removeTrackFromFavorites(
     @Param(
@@ -107,6 +132,12 @@ export class FavoritesController {
   }
 
   @Delete('album/:id')
+  @ApiParam({
+    name: 'id',
+    type: 'string',
+    example: 'a0a659c7-95c8-4c4b-9c5a-69d4e36ba578',
+    description: 'The UUID of the album',
+  })
   @HttpCode(HttpStatus.NO_CONTENT)
   async removeAlbumFromFavorites(
     @Param(
@@ -119,6 +150,12 @@ export class FavoritesController {
   }
 
   @Delete('artist/:id')
+  @ApiParam({
+    name: 'id',
+    type: 'string',
+    example: 'a0a659c7-95c8-4c4b-9c5a-69d4e36ba578',
+    description: 'The UUID of the artist',
+  })
   @HttpCode(HttpStatus.NO_CONTENT)
   async removeArtistFromFavorites(
     @Param(

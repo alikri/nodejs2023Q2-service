@@ -67,13 +67,8 @@ export class UserController {
   @Put(':id')
   @ApiOperation({ summary: 'Change password' })
   @ApiBody({
-    schema: {
-      type: 'object',
-      properties: {
-        oldPassword: { type: 'string', example: 'nickname12345!' },
-        newPassword: { type: 'string', example: 'nickname54321!' },
-      },
-    },
+    type: UpdatePasswordDto,
+    description: 'Provide old and new password',
   })
   async updatePassword(
     @Param(
