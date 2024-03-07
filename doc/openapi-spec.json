@@ -148,7 +148,17 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/CreateArtistDto"
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "example": "Miley Cyrus"
+                  },
+                  "grammy": {
+                    "type": "boolean",
+                    "example": "true"
+                  }
+                }
               }
             }
           }
@@ -168,6 +178,8 @@
             "name": "id",
             "required": true,
             "in": "path",
+            "example": "a0a659c7-95c8-4c4b-9c5a-69d4e36ba578",
+            "description": "The UUID of the artist",
             "schema": {
               "type": "string"
             }
@@ -186,6 +198,8 @@
             "name": "id",
             "required": true,
             "in": "path",
+            "example": "a0a659c7-95c8-4c4b-9c5a-69d4e36ba578",
+            "description": "The UUID of the artist",
             "schema": {
               "type": "string"
             }
@@ -196,7 +210,13 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/UpdateArtistDto"
+                "type": "object",
+                "properties": {
+                  "grammy": {
+                    "type": "boolean",
+                    "example": "false"
+                  }
+                }
               }
             }
           }
@@ -554,14 +574,6 @@
   "servers": [],
   "components": {
     "schemas": {
-      "CreateArtistDto": {
-        "type": "object",
-        "properties": {}
-      },
-      "UpdateArtistDto": {
-        "type": "object",
-        "properties": {}
-      },
       "CreateTrackDto": {
         "type": "object",
         "properties": {}

@@ -16,6 +16,7 @@ import { Artist } from '../models/artist.entity';
 import { ParseUUIDPipe } from '@nestjs/common';
 import { CreateArtistDto } from './dto/create-artist.dto';
 import { UpdateArtistDto } from './dto/update-artist.dto';
+import { ApiBody, ApiParam } from '@nestjs/swagger';
 
 @Controller('artist')
 export class ArtistController {
@@ -27,6 +28,12 @@ export class ArtistController {
   }
 
   @Get(':id')
+  @ApiParam({
+    name: 'id',
+    type: 'string',
+    example: 'a0a659c7-95c8-4c4b-9c5a-69d4e36ba578',
+    description: 'The UUID of the artist',
+  })
   async getArtistById(
     @Param(
       'id',
@@ -42,12 +49,35 @@ export class ArtistController {
   }
 
   @Post()
+  @ApiBody({
+    schema: {
+      type: 'object',
+      properties: {
+        name: { type: 'string', example: 'Miley Cyrus' },
+        grammy: { type: 'boolean', example: 'true' },
+      },
+    },
+  })
   @UsePipes(new ValidationPipe({ transform: true }))
   async createArtist(@Body() artistDto: CreateArtistDto): Promise<Artist> {
     return this.artistService.createArtist(artistDto);
   }
 
   @Put(':id')
+  @ApiParam({
+    name: 'id',
+    type: 'string',
+    example: 'a0a659c7-95c8-4c4b-9c5a-69d4e36ba578',
+    description: 'The UUID of the artist',
+  })
+  @ApiBody({
+    schema: {
+      type: 'object',
+      properties: {
+        grammy: { type: 'boolean', example: 'false' },
+      },
+    },
+  })
   @UsePipes(new ValidationPipe({ transform: true }))
   async updateArtist(
     @Param(
@@ -65,6 +95,12 @@ export class ArtistController {
   }
 
   @Delete(':id')
+  @ApiParam({
+    name: 'id',
+    type: 'string',
+    example: 'a0a659c7-95c8-4c4b-9c5a-69d4e36ba578',
+    description: 'The UUID of the artist',
+  })
   async deleteArtist(
     @Param(
       'id',
