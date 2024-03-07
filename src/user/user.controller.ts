@@ -15,7 +15,7 @@ import { CreateUserDto } from './dtos/create-user.dto';
 import { UpdatePasswordDto } from './dtos/update-password.dto';
 import { UserService } from './user.service';
 import { UserResponseDto } from './dtos/user-response.dto';
-import { ApiBody, ApiParam } from '@nestjs/swagger';
+import { ApiBody, ApiOperation, ApiParam } from '@nestjs/swagger';
 
 @Controller('user')
 export class UserController {
@@ -65,6 +65,7 @@ export class UserController {
   }
 
   @Put(':id')
+  @ApiOperation({ summary: 'Change password' })
   @ApiBody({
     schema: {
       type: 'object',
