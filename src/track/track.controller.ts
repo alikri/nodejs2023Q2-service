@@ -17,12 +17,17 @@ import { TrackService } from './track.service';
 import { CreateTrackDto } from './dto/create-track.dto';
 import { UpdateTrackDto } from './dto/update-track.dto';
 import { Track } from 'src/models/track.entity';
+import { ApiBody, ApiOperation, ApiParam } from '@nestjs/swagger';
 
 @Controller('track')
 export class TrackController {
   constructor(private readonly trackService: TrackService) {}
 
   @Post()
+  @ApiBody({
+    type: CreateTrackDto,
+    description: 'Create a new track',
+  })
   @UsePipes(new ValidationPipe({ transform: true }))
   async createTrack(@Body() createTrackDto: CreateTrackDto): Promise<any> {
     return this.trackService.createTrack(createTrackDto);
@@ -50,6 +55,8 @@ export class TrackController {
 
   @Put(':id')
   @UsePipes(new ValidationPipe({ transform: true }))
+  @ApiOperation({ summary: 'Update track information' })
+  @ApiBody({ type: UpdateTrackDto, description: 'Payload to update a track' })
   async updateTrack(
     @Param(
       'id',
@@ -69,6 +76,12 @@ export class TrackController {
   }
 
   @Delete(':id')
+  @ApiParam({
+    name: 'id',
+    type: 'string',
+    example: 'a0a659c7-95c8-4c4b-9c5a-69d4e36ba578',
+    description: 'The UUID of the user',
+  })
   async deleteTrack(
     @Param(
       'id',

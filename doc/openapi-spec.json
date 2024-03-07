@@ -118,6 +118,8 @@
             "name": "id",
             "required": true,
             "in": "path",
+            "example": "a0a659c7-95c8-4c4b-9c5a-69d4e36ba578",
+            "description": "The UUID of the user",
             "schema": {
               "type": "string"
             }
@@ -234,6 +236,8 @@
             "name": "id",
             "required": true,
             "in": "path",
+            "example": "a0a659c7-95c8-4c4b-9c5a-69d4e36ba578",
+            "description": "The UUID of the artist",
             "schema": {
               "type": "string"
             }
@@ -252,6 +256,7 @@
         "parameters": [],
         "requestBody": {
           "required": true,
+          "description": "Create a new track",
           "content": {
             "application/json": {
               "schema": {
@@ -297,6 +302,7 @@
       },
       "put": {
         "operationId": "TrackController_updateTrack",
+        "summary": "Update track information",
         "parameters": [
           {
             "name": "id",
@@ -309,6 +315,7 @@
         ],
         "requestBody": {
           "required": true,
+          "description": "Payload to update a track",
           "content": {
             "application/json": {
               "schema": {
@@ -576,11 +583,57 @@
     "schemas": {
       "CreateTrackDto": {
         "type": "object",
-        "properties": {}
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "Flowers"
+          },
+          "artistId": {
+            "type": "string",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000",
+            "nullable": true
+          },
+          "albumId": {
+            "type": "string",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000",
+            "nullable": true
+          },
+          "duration": {
+            "type": "number",
+            "example": 202
+          }
+        },
+        "required": [
+          "name",
+          "artistId",
+          "albumId",
+          "duration"
+        ]
       },
       "UpdateTrackDto": {
         "type": "object",
-        "properties": {}
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "Updated Song Name"
+          },
+          "artistId": {
+            "type": "string",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "albumId": {
+            "type": "string",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "duration": {
+            "type": "number",
+            "example": 320
+          }
+        }
       },
       "CreateAlbumDto": {
         "type": "object",
