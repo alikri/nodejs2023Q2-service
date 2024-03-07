@@ -371,6 +371,8 @@
             "name": "id",
             "required": true,
             "in": "path",
+            "example": "a0a659c7-95c8-4c4b-9c5a-69d4e36ba578",
+            "description": "The UUID of the album",
             "schema": {
               "type": "string"
             }
@@ -586,7 +588,7 @@
         "properties": {
           "oldPassword": {
             "type": "string",
-            "example": "OldPassword123!",
+            "example": "nickname12345!",
             "description": "The current password of the user."
           },
           "newPassword": {
