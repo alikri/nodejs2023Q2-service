@@ -16,6 +16,7 @@ import { CreateAlbumDto } from './dto/create-album.dto';
 import { UpdateAlbumDto } from './dto/update-album.dto';
 import { Album } from '../models/album.entity';
 import { ParseUUIDPipe } from '@nestjs/common';
+import { ApiBody, ApiOperation, ApiParam } from '@nestjs/swagger';
 
 @Controller('album')
 export class AlbumController {
@@ -42,6 +43,10 @@ export class AlbumController {
   }
 
   @Post()
+  @ApiBody({
+    type: CreateAlbumDto,
+    description: 'Create a new album',
+  })
   @UsePipes(new ValidationPipe({ whitelist: true }))
   async createAlbum(@Body() createAlbumDto: CreateAlbumDto): Promise<Album> {
     return this.albumService.createAlbum(createAlbumDto);
@@ -51,6 +56,8 @@ export class AlbumController {
   @UsePipes(
     new ValidationPipe({ transform: true, skipMissingProperties: true }),
   )
+  @ApiOperation({ summary: 'Update album information' })
+  @ApiBody({ type: UpdateAlbumDto, description: 'Payload to update album' })
   async updateAlbum(
     @Param(
       'id',
@@ -67,6 +74,12 @@ export class AlbumController {
   }
 
   @Delete(':id')
+  @ApiParam({
+    name: 'id',
+    type: 'string',
+    example: 'a0a659c7-95c8-4c4b-9c5a-69d4e36ba578',
+    description: 'The UUID of the album',
+  })
   async deleteArtist(
     @Param(
       'id',

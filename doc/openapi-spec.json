@@ -75,6 +75,7 @@
       },
       "put": {
         "operationId": "UserController_updatePassword",
+        "summary": "Change password",
         "parameters": [
           {
             "name": "id",
@@ -251,6 +252,15 @@
       }
     },
     "/track": {
+      "get": {
+        "operationId": "TrackController_getAllTracks",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      },
       "post": {
         "operationId": "TrackController_createTrack",
         "parameters": [],
@@ -267,15 +277,6 @@
         },
         "responses": {
           "201": {
-            "description": ""
-          }
-        }
-      },
-      "get": {
-        "operationId": "TrackController_getAllTracks",
-        "parameters": [],
-        "responses": {
-          "200": {
             "description": ""
           }
         }
@@ -337,6 +338,8 @@
             "name": "id",
             "required": true,
             "in": "path",
+            "example": "a0a659c7-95c8-4c4b-9c5a-69d4e36ba578",
+            "description": "The UUID of the user",
             "schema": {
               "type": "string"
             }
@@ -364,6 +367,7 @@
         "parameters": [],
         "requestBody": {
           "required": true,
+          "description": "Create a new album",
           "content": {
             "application/json": {
               "schema": {
@@ -400,6 +404,7 @@
       },
       "put": {
         "operationId": "AlbumController_updateAlbum",
+        "summary": "Update album information",
         "parameters": [
           {
             "name": "id",
@@ -412,6 +417,7 @@
         ],
         "requestBody": {
           "required": true,
+          "description": "Payload to update album",
           "content": {
             "application/json": {
               "schema": {
@@ -433,6 +439,8 @@
             "name": "id",
             "required": true,
             "in": "path",
+            "example": "a0a659c7-95c8-4c4b-9c5a-69d4e36ba578",
+            "description": "The UUID of the user",
             "schema": {
               "type": "string"
             }
@@ -637,11 +645,50 @@
       },
       "CreateAlbumDto": {
         "type": "object",
-        "properties": {}
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Name of the album",
+            "example": "The Dark Side of the Moon"
+          },
+          "year": {
+            "type": "number",
+            "description": "Release year of the album",
+            "minimum": 1900,
+            "maximum": 2024,
+            "example": 1973
+          },
+          "artistId": {
+            "type": "string",
+            "format": "uuid",
+            "description": "Artist ID associated with the album",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          }
+        },
+        "required": [
+          "name",
+          "year"
+        ]
       },
       "UpdateAlbumDto": {
         "type": "object",
-        "properties": {}
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "Updated Album Name"
+          },
+          "year": {
+            "type": "number",
+            "example": 2023,
+            "minimum": 1900,
+            "maximum": 2024
+          },
+          "artistId": {
+            "type": "string",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          }
+        }
       }
     }
   }

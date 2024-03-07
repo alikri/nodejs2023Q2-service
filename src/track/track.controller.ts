@@ -23,16 +23,6 @@ import { ApiBody, ApiOperation, ApiParam } from '@nestjs/swagger';
 export class TrackController {
   constructor(private readonly trackService: TrackService) {}
 
-  @Post()
-  @ApiBody({
-    type: CreateTrackDto,
-    description: 'Create a new track',
-  })
-  @UsePipes(new ValidationPipe({ transform: true }))
-  async createTrack(@Body() createTrackDto: CreateTrackDto): Promise<any> {
-    return this.trackService.createTrack(createTrackDto);
-  }
-
   @Get()
   async getAllTracks(): Promise<any[]> {
     return this.trackService.getAllTracks();
@@ -51,6 +41,16 @@ export class TrackController {
       throw new NotFoundException('Track not found');
     }
     return track;
+  }
+
+  @Post()
+  @ApiBody({
+    type: CreateTrackDto,
+    description: 'Create a new track',
+  })
+  @UsePipes(new ValidationPipe({ transform: true }))
+  async createTrack(@Body() createTrackDto: CreateTrackDto): Promise<any> {
+    return this.trackService.createTrack(createTrackDto);
   }
 
   @Put(':id')
@@ -80,7 +80,7 @@ export class TrackController {
     name: 'id',
     type: 'string',
     example: 'a0a659c7-95c8-4c4b-9c5a-69d4e36ba578',
-    description: 'The UUID of the user',
+    description: 'The UUID of the track',
   })
   async deleteTrack(
     @Param(
