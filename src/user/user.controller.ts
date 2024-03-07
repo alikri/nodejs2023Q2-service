@@ -15,6 +15,7 @@ import { CreateUserDto } from './dtos/create-user.dto';
 import { UpdatePasswordDto } from './dtos/update-password.dto';
 import { UserService } from './user.service';
 import { UserResponseDto } from './dtos/user-response.dto';
+import { ApiBody, ApiParam } from '@nestjs/swagger';
 
 @Controller('user')
 export class UserController {
@@ -27,6 +28,12 @@ export class UserController {
   }
 
   @Get(':id')
+  @ApiParam({
+    name: 'id',
+    type: 'string',
+    example: 'a0a659c7-95c8-4c4b-9c5a-69d4e36ba578',
+    description: 'The UUID of the user',
+  })
   async getUserById(
     @Param(
       'id',
@@ -40,6 +47,15 @@ export class UserController {
   }
 
   @Post()
+  @ApiBody({
+    schema: {
+      type: 'object',
+      properties: {
+        login: { type: 'string', example: 'nickname' },
+        password: { type: 'string', example: 'nickname12345!' },
+      },
+    },
+  })
   @HttpCode(HttpStatus.CREATED)
   async createUser(
     @Body() createUserDto: CreateUserDto,
@@ -49,6 +65,15 @@ export class UserController {
   }
 
   @Put(':id')
+  @ApiBody({
+    schema: {
+      type: 'object',
+      properties: {
+        oldPassword: { type: 'string', example: 'nickname12345!' },
+        newPassword: { type: 'string', example: 'nickname54321!' },
+      },
+    },
+  })
   async updatePassword(
     @Param(
       'id',
