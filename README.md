@@ -8,7 +8,7 @@
 ## In order to perform a cross-check review, please follow the steps:
 
 ```
-1. git clone <https://github.com/alikri/nodejs2023Q2-service.git>
+1. git clone [repo](https://github.com/alikri/nodejs2023Q2-service.git)
 ```
 2. git checkout library-part1
 ```
@@ -20,6 +20,6 @@
 ```
 6. npm run test
 ```
-7. to open swagger follow the link: <http://localhost:4000/doc/>
+7. to open swagger follow the link: [swagger](http://localhost:4000/doc/)
 ```
 8. npm run lint
