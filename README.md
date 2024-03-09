@@ -28,7 +28,7 @@ npm run test
 
 to open swagger follow the link:  [http://localhost:4000/doc/](http://localhost:4000/doc/) 
 
-to check for lint errors, run:
+to check for lint errors:
 ```
 npm run lint
 ```
