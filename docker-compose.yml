@@ -2,23 +2,27 @@ version: '3.8'
 services:
   app:
     build: .
-    environment:
-      - NODE_ENV=production
     ports:
       - "4000:4000"
-    env_file:
-      - .env
+    environment:
+      DB_HOST: db
+      DB_PORT: 5432
+      DB_USERNAME: Iamuser
+      DB_PASSWORD: Iampassword
+      DB_NAME: Iamdatabase
     depends_on:
       - db
     networks:
       - alikri_bridge_network
 
   db:
-    image: postgres:latest
+    image: postgres
     environment:
       POSTGRES_USER: Iamuser
       POSTGRES_PASSWORD: Iampassword
       POSTGRES_DB: Iamdatabase
+    ports:
+      - "5432:5432"
     networks:
       - alikri_bridge_network
 
