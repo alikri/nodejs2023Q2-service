@@ -1,6 +1,6 @@
-import { Album } from './album.entity';
-import { Artist } from './artist.entity';
-import { Track } from './track.entity';
+import { Album } from './album';
+import { Artist } from './artist';
+import { Track } from './track';
 
 export interface Favorites {
   artists: string[];

@@ -4,10 +4,10 @@ import { UpdateFavoritesDto } from './dto/update-favorites.dto';
 import { TrackService } from 'src/track/track.service';
 import { AlbumService } from 'src/album/album.service';
 import { ArtistService } from 'src/artist/artist.service';
-import { Artist } from 'src/models/artist.entity';
-import { Album } from 'src/models/album.entity';
-import { Track } from 'src/models/track.entity';
-import { FavoritesResponse } from 'src/models/favorites.entity';
+import { Artist } from 'src/models/artist';
+import { Album } from 'src/models/album';
+import { Track } from 'src/models/track';
+import { FavoritesResponse } from 'src/models/favorites';
 
 @Injectable()
 export class FavoritesService {

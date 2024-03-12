@@ -1,7 +1,7 @@
 // src/favorites/favorites.repository.ts
 
 import { Injectable } from '@nestjs/common';
-import { Favorites } from '../models/favorites.entity';
+import { Favorites } from '../models/favorites';
 
 @Injectable()
 export class FavoritesRepository {

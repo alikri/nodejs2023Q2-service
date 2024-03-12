@@ -1,5 +1,5 @@
 import { BaseRepository } from '../repositories/in-memory-db/base.repository';
-import { Track } from '../models/track.entity';
+import { Track } from '../models/track';
 
 export class TrackRepository extends BaseRepository<Track> {
   constructor() {

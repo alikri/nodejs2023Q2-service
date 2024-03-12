@@ -1,4 +1,4 @@
-import { Album } from '../models/album.entity';
+import { Album } from '../models/album';
 import { BaseRepository } from '../repositories/in-memory-db/base.repository';
 import { CreateAlbumDto } from './dto/create-album.dto';
 import { v4 as uuidv4 } from 'uuid';

@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { BaseRepository } from '../repositories/in-memory-db/base.repository';
-import { User } from '../models/user.entity';
+import { User } from '../models/user';
 import { v4 as uuidv4 } from 'uuid';
 
 @Injectable()

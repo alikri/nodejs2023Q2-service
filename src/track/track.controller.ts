@@ -16,7 +16,7 @@ import { ParseUUIDPipe } from '@nestjs/common';
 import { TrackService } from './track.service';
 import { CreateTrackDto } from './dto/create-track.dto';
 import { UpdateTrackDto } from './dto/update-track.dto';
-import { Track } from 'src/models/track.entity';
+import { Track } from 'src/models/track';
 import { ApiBody, ApiOperation, ApiParam } from '@nestjs/swagger';
 
 @Controller('track')

@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { ArtistRepository } from './artist.repository';
-import { Artist } from '../models/artist.entity';
+import { Artist } from '../models/artist';
 import { AlbumService } from 'src/album/album.service';
 import { TrackService } from 'src/track/track.service';
 
