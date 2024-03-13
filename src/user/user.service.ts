@@ -39,31 +39,6 @@ export class UserService {
     return user;
   }
 
-  async updateUser(
-    id: string,
-    item: Partial<Omit<User, 'id' | 'createdAt' | 'updatedAt' | 'version'>>,
-  ): Promise<User> {
-    const existingUser = await this.userRepository.findOneBy({ id });
-    if (!existingUser) {
-      throw new NotFoundException('User not found');
-    }
-
-    const updatedUser = this.userRepository.merge(existingUser, {
-      ...item,
-      updatedAt: Date.now(),
-      version: existingUser.version + 1,
-    });
-
-    return this.userRepository.save(updatedUser);
-  }
-
-  async deleteUser(id: string): Promise<void> {
-    const result = await this.userRepository.delete(id);
-    if (result.affected === 0) {
-      throw new NotFoundException(`User with ID ${id} not found`);
-    }
-  }
-
   async findAllUsers(): Promise<User[]> {
     return this.userRepository.find();
   }
@@ -78,9 +53,13 @@ export class UserService {
       throw new ForbiddenException('Old password is incorrect');
     }
 
-    await this.userRepository.update(id, {
-      password: updatePasswordDto.newPassword,
+    const newPassword = updatePasswordDto.newPassword;
+    const updatedUser = this.userRepository.merge(user, {
+      password: newPassword,
+      updatedAt: Date.now(),
+      version: user.version + 1,
     });
-    return this.userRepository.findOneBy({ id });
+
+    return this.userRepository.save(updatedUser);
   }
 }
