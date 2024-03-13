@@ -46,7 +46,7 @@ export class TrackService {
   async deleteTrack(id: string): Promise<void> {
     const result = await this.trackRepository.delete(id);
     if (result.affected === 0) {
-      throw new NotFoundException(`User with ID ${id} not found`);
+      throw new NotFoundException(`Track with ID ${id} not found`);
     }
   }
 
