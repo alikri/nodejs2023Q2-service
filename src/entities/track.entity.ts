@@ -1,6 +1,12 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm';
-import { Artist } from './artist.entity'; // Assuming Artist entity exists
-import { Album } from './album.entity'; // Assuming Album entity exists
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  ManyToOne,
+  JoinColumn,
+} from 'typeorm';
+import { Artist } from './artist.entity';
+import { Album } from './album.entity';
 
 @Entity()
 export class Track {
@@ -10,11 +16,17 @@ export class Track {
   @Column()
   name: string;
 
-  @ManyToOne(() => Artist, { nullable: true })
+  @ManyToOne(() => Artist)
+  @JoinColumn({ name: 'artistId' })
+  artist: Artist;
+
   @Column({ nullable: true })
   artistId: string | null;
 
-  @ManyToOne(() => Album, { nullable: true })
+  @ManyToOne(() => Album)
+  @JoinColumn({ name: 'albumId' })
+  album: Album;
+
   @Column({ nullable: true })
   albumId: string | null;
 
