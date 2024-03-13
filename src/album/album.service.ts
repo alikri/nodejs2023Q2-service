@@ -6,14 +6,13 @@ import { CreateAlbumDto } from './dto/create-album.dto';
 import { UpdateAlbumDto } from './dto/update-album.dto';
 import { TrackService } from 'src/track/track.service';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Track } from 'src/entities/track.entity';
 import { Repository } from 'typeorm';
 import { v4 as uuidv4 } from 'uuid';
 
 @Injectable()
 export class AlbumService {
   constructor(
-    @InjectRepository(Track)
+    @InjectRepository(Album)
     private readonly albumRepository: Repository<Album>,
     private readonly trackService: TrackService,
   ) {}
