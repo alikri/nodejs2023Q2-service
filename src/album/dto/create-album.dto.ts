@@ -24,10 +24,10 @@ export class CreateAlbumDto {
 
   @ApiProperty({
     type: 'string',
-    format: 'uuid',
+    format: 'uuid of the existing artistID or null',
     description: 'Artist ID associated with the album',
     required: false,
-    example: '123e4567-e89b-12d3-a456-426614174000',
+    example: null,
   })
   @IsUUID()
   @IsOptional()
