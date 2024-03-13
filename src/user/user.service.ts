@@ -48,8 +48,7 @@ export class UserService {
       throw new NotFoundException('User not found');
     }
 
-    const updatedUser = this.userRepository.create({
-      ...existingUser,
+    const updatedUser = this.userRepository.merge(existingUser, {
       ...item,
       updatedAt: Date.now(),
       version: existingUser.version + 1,
