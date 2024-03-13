@@ -1,49 +1,60 @@
-import { Injectable } from '@nestjs/common';
-import { TrackRepository } from './track.repository';
-import { Track } from '../models/track';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateTrackDto } from './dto/create-track.dto';
+import { Repository } from 'typeorm';
+import { v4 as uuidv4 } from 'uuid';
+import { InjectRepository } from '@nestjs/typeorm/dist/common';
+import { Track } from 'src/entities/track.entity';
 
 @Injectable()
 export class TrackService {
-  constructor(private readonly trackRepository: TrackRepository) {}
+  constructor(
+    @InjectRepository(Track)
+    private readonly trackRepository: Repository<Track>,
+  ) {}
 
   async createTrack(createTrackDto: CreateTrackDto): Promise<Track> {
-    return this.trackRepository.create(createTrackDto);
+    const track = this.trackRepository.create({
+      ...createTrackDto,
+      id: uuidv4(),
+    });
+    return await this.trackRepository.save(track);
   }
 
   async getAllTracks(): Promise<Track[]> {
-    return this.trackRepository.findAll();
+    return await this.trackRepository.find();
   }
 
   async getTrackById(id: string): Promise<Track | null> {
-    const track = await this.trackRepository.findById(id);
+    const track = await this.trackRepository.findOneBy({ id });
     if (!track) {
-      return null;
+      throw new NotFoundException(`User with ID ${id} not found`);
     }
     return track;
   }
 
   async updateTrack(id: string, trackUpdates: Partial<Track>): Promise<Track> {
-    const track = this.trackRepository.update(id, { id, ...trackUpdates });
-    return track;
+    const track = await this.getTrackById(id);
+
+    if (!track) {
+      return null;
+    }
+
+    await this.trackRepository.update(id, trackUpdates);
+    return await this.getTrackById(id);
   }
 
   async deleteTrack(id: string): Promise<void> {
-    await this.getTrackById(id);
-    await this.trackRepository.delete(id);
+    const result = await this.trackRepository.delete(id);
+    if (result.affected === 0) {
+      throw new NotFoundException(`User with ID ${id} not found`);
+    }
   }
 
   async setAlbumIdToNullForAlbum(albumId: string): Promise<void> {
-    const tracks = await this.trackRepository.findAllTracksByAlbumId(albumId);
-    for (const track of tracks) {
-      await this.trackRepository.update(track.id, { ...track, albumId: null });
-    }
+    await this.trackRepository.update({ albumId }, { albumId: null });
   }
 
   async setArtistIdToNullForTrack(artistId: string): Promise<void> {
-    const tracks = await this.trackRepository.findAllTracksByArtistId(artistId);
-    for (const track of tracks) {
-      await this.trackRepository.update(track.id, { ...track, artistId: null });
-    }
+    await this.trackRepository.update({ artistId }, { artistId: null });
   }
 }
