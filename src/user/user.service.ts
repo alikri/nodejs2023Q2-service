@@ -3,11 +3,11 @@ import {
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
-import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { UpdatePasswordDto } from 'src/user/dtos/update-password.dto';
 import { User } from 'src/entities/user.entity';
 import { v4 as uuidv4 } from 'uuid';
+import { Repository } from 'typeorm/repository/Repository';
 
 @Injectable()
 export class UserService {

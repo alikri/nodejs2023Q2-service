@@ -32,3 +32,10 @@ to check for lint errors:
 ```
 npm run lint
 ```
+
+to generate migrations:
+npx ts-node ./node_modules/typeorm/cli.js migration:generate -d ./src/data-source.ts ./src/migrations/InitialMigrationTable
+
+to run migrations:
+
+npx typeorm-ts-node-commonjs migration:run -d src/data-source.ts
