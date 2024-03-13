@@ -39,3 +39,6 @@ npx ts-node ./node_modules/typeorm/cli.js migration:generate -d ./src/data-sourc
 to run migrations:
 
 npx typeorm-ts-node-commonjs migration:run -d src/data-source.ts
+
+
+docker run --name postgres-container -e POSTGRES_USER=Iamuser -e POSTGRES_PASSWORD=Iampassword -e POSTGRES_DB=Iamdatabase -p 5432:5432 -d postgres
