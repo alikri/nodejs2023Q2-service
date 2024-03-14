@@ -23,7 +23,7 @@ export class Track {
   @Column({ nullable: true })
   artistId: string | null;
 
-  @ManyToOne(() => Album)
+  @ManyToOne(() => Album, (album) => album.tracks, { onDelete: 'SET NULL' })
   @JoinColumn({ name: 'albumId' })
   album: Album;
 

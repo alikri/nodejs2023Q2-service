@@ -4,8 +4,10 @@ import {
   Column,
   ManyToOne,
   JoinColumn,
+  OneToMany,
 } from 'typeorm';
 import { Artist } from './artist.entity';
+import { Track } from './track.entity';
 
 @Entity()
 export class Album {
@@ -24,4 +26,7 @@ export class Album {
 
   @Column({ nullable: true })
   artistId: string | null;
+
+  @OneToMany(() => Track, (track) => track.album)
+  tracks: Track[];
 }
