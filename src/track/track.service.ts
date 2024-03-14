@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateTrackDto } from './dto/create-track.dto';
-import { Repository } from 'typeorm';
+import { In, Repository } from 'typeorm';
 import { v4 as uuidv4 } from 'uuid';
 import { InjectRepository } from '@nestjs/typeorm/dist/common';
 import { Track } from 'src/entities/track.entity';
@@ -56,5 +56,9 @@ export class TrackService {
 
   async setArtistIdToNullForTrack(artistId: string): Promise<void> {
     await this.trackRepository.update({ artistId }, { artistId: null });
+  }
+
+  async findTracksByIds(ids: string[]): Promise<Track[]> {
+    return this.trackRepository.findBy({ id: In(ids) });
   }
 }

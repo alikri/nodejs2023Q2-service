@@ -6,7 +6,7 @@ import { CreateAlbumDto } from './dto/create-album.dto';
 import { UpdateAlbumDto } from './dto/update-album.dto';
 import { TrackService } from 'src/track/track.service';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { In, Repository } from 'typeorm';
 import { v4 as uuidv4 } from 'uuid';
 
 @Injectable()
@@ -71,5 +71,9 @@ export class AlbumService {
     for (const album of albums) {
       await this.albumRepository.update(album.id, { artistId: null });
     }
+  }
+
+  async findAlbumsByIds(ids: string[]): Promise<Album[]> {
+    return this.albumRepository.findBy({ id: In(ids) });
   }
 }

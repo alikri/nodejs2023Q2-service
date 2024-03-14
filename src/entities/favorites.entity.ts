@@ -1,11 +1,4 @@
-import {
-  Entity,
-  PrimaryGeneratedColumn,
-  ManyToOne,
-  JoinTable,
-  ManyToMany,
-} from 'typeorm';
-import { User } from './user.entity';
+import { Entity, PrimaryGeneratedColumn, JoinTable, ManyToMany } from 'typeorm';
 import { Artist } from './artist.entity';
 import { Album } from './album.entity';
 import { Track } from './track.entity';
@@ -14,9 +7,6 @@ import { Track } from './track.entity';
 export class Favorites {
   @PrimaryGeneratedColumn('uuid')
   id: string;
-
-  @ManyToOne(() => User)
-  user: User;
 
   @ManyToMany(() => Artist)
   @JoinTable()

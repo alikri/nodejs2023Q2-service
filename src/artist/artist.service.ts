@@ -3,7 +3,7 @@ import { AlbumService } from 'src/album/album.service';
 import { TrackService } from 'src/track/track.service';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Artist } from 'src/entities/artist.entity';
-import { Repository } from 'typeorm';
+import { In, Repository } from 'typeorm';
 import { CreateArtistDto } from './dto/create-artist.dto';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -64,5 +64,9 @@ export class ArtistService {
 
     await this.trackService.setArtistIdToNullForTrack(id);
     await this.albumService.setArtistIdToNullForAlbum(id);
+  }
+
+  async findArtistsByIds(ids: string[]): Promise<Artist[]> {
+    return this.artistRepository.findBy({ id: In(ids) });
   }
 }
