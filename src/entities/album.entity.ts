@@ -18,7 +18,7 @@ export class Album {
   @Column('int')
   year: number;
 
-  @ManyToOne(() => Artist)
+  @ManyToOne(() => Artist, (artist) => artist.albums, { onDelete: 'SET NULL' })
   @JoinColumn({ name: 'artistId' })
   artist: Artist;
 

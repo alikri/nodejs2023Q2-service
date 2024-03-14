@@ -16,7 +16,7 @@ export class Track {
   @Column()
   name: string;
 
-  @ManyToOne(() => Artist)
+  @ManyToOne(() => Artist, (artist) => artist.tracks, { onDelete: 'SET NULL' })
   @JoinColumn({ name: 'artistId' })
   artist: Artist;
 
