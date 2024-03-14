@@ -60,6 +60,8 @@ export class UserService {
       version: user.version + 1,
     });
 
+    updatedUser.createdAt = Number(updatedUser.createdAt);
+    updatedUser.updatedAt = Number(updatedUser.updatedAt);
     return this.userRepository.save(updatedUser);
   }
 
