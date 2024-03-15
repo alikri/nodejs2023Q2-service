@@ -1,22 +1,16 @@
-import { Entity, PrimaryGeneratedColumn, JoinTable, ManyToMany } from 'typeorm';
-import { Artist } from './artist.entity';
-import { Album } from './album.entity';
-import { Track } from './track.entity';
+import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
 
 @Entity()
 export class Favorites {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @ManyToMany(() => Artist)
-  @JoinTable()
-  artists: Artist[];
+  @Column('simple-array')
+  artists: string[];
 
-  @ManyToMany(() => Album)
-  @JoinTable()
-  albums: Album[];
+  @Column('simple-array')
+  albums: string[];
 
-  @ManyToMany(() => Track)
-  @JoinTable()
-  tracks: Track[];
+  @Column('simple-array')
+  tracks: string[];
 }
