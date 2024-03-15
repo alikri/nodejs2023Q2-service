@@ -15,7 +15,7 @@ const AppDataSource = new DataSource({
   database: process.env.DB_NAME,
   entities: [User, Artist, Album, Track, Favorites],
   synchronize: false,
-  logging: true,
+  logging: false,
   migrations: ['dist/migrations/*.js'],
 });
 

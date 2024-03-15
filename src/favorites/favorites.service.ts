@@ -1,10 +1,10 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
-import { TrackService } from 'src/track/track.service';
+import { Injectable } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
 import { AlbumService } from 'src/album/album.service';
 import { ArtistService } from 'src/artist/artist.service';
-import { FavoritesResponse } from 'src/models/favorites';
-import { InjectRepository } from '@nestjs/typeorm';
 import { Favorites } from 'src/entities/favorites.entity';
+import { FavoritesResponse } from 'src/models/favorites';
+import { TrackService } from 'src/track/track.service';
 import { Repository } from 'typeorm';
 
 @Injectable()
@@ -17,74 +17,72 @@ export class FavoritesService {
     private readonly favoritesRepository: Repository<Favorites>,
   ) {}
 
-  async getFavorites(): Promise<FavoritesResponse> {
-    const favorites = await this.favoritesRepository.findOne({
-      where: {},
-    });
+  async getFavorites(): Promise<FavoritesResponse | Favorites> {
+    let [favorites] = await this.favoritesRepository.find();
+
     if (!favorites) {
-      const newFavorites = this.favoritesRepository.create({
+      favorites = this.favoritesRepository.create({
         artists: [],
         albums: [],
         tracks: [],
       });
-      await this.favoritesRepository.save(newFavorites);
-
-      return {
-        artists: [],
-        albums: [],
-        tracks: [],
-      };
-    } else {
-      const artistsArray =
-        favorites.artists.length > 0
-          ? await this.artistService.findArtistsByIds(favorites.artists)
-          : [];
-      const albumsArray =
-        favorites.albums.length > 0
-          ? await this.albumService.findAlbumsByIds(favorites.albums)
-          : [];
-      const tracksArray =
-        favorites.tracks.length > 0
-          ? await this.trackService.findTracksByIds(favorites.tracks)
-          : [];
-
-      return {
-        artists: artistsArray,
-        albums: albumsArray,
-        tracks: tracksArray,
-      };
+      return await this.favoritesRepository.save(favorites);
     }
+
+    const artists = await Promise.all(
+      favorites.artists.map(async (id) => {
+        const isExist = await this.checkEntityExists('artists', id);
+        if (isExist) {
+          return await this.artistService.getArtistById(id);
+        }
+        return null;
+      }),
+    );
+
+    const albums = await Promise.all(
+      favorites.albums.map(async (id) => {
+        const isExist = await this.checkEntityExists('albums', id);
+        if (isExist) {
+          return await this.albumService.getAlbumById(id);
+        }
+        return null;
+      }),
+    );
+    const tracks = await Promise.all(
+      favorites.tracks.map(async (id) => {
+        const isExist = await this.checkEntityExists('tracks', id);
+        if (isExist) {
+          return await this.trackService.getTrackById(id);
+        }
+        return null;
+      }),
+    );
+
+    const result = {
+      artists: artists.filter((artist) => artist !== null),
+      albums: albums.filter((album) => album !== null),
+      tracks: tracks.filter((track) => track !== null),
+    };
+
+    console.log('RESULT!!!!!!!!!!', result);
+    return result;
   }
 
   async addEntityToFavorites(
     entityType: 'artists' | 'albums' | 'tracks',
     entityId: string,
   ): Promise<void> {
-    const favorites = await this.favoritesRepository.findOne({
-      where: {},
-    });
+    let [favorites] = await this.favoritesRepository.find();
 
-    let entity = null;
-    switch (entityType) {
-      case 'artists':
-        entity = await this.artistService.getArtistById(entityId);
-        break;
-      case 'albums':
-        entity = await this.albumService.getAlbumById(entityId);
-        break;
-      case 'tracks':
-        entity = await this.trackService.getTrackById(entityId);
-        break;
+    if (!favorites) {
+      favorites = this.favoritesRepository.create({
+        artists: [],
+        albums: [],
+        tracks: [],
+      });
     }
 
-    if (!entity) {
-      throw new NotFoundException(
-        `${entityType.slice(0, -1)} with ID ${entityId} not found`,
-      );
-    }
-
-    const entityExistsInFavorites = favorites[entityType].includes(entityId);
-    if (!entityExistsInFavorites) {
+    if (!favorites[entityType].includes(entityId)) {
       favorites[entityType].push(entityId);
       await this.favoritesRepository.save(favorites);
     }
@@ -94,22 +92,19 @@ export class FavoritesService {
     entityType: 'artists' | 'albums' | 'tracks',
     entityId: string,
   ): Promise<void> {
-    const favorites = await this.favoritesRepository.findOne({
-      where: {},
-    });
+    let [favorites] = await this.favoritesRepository.find();
 
     if (!favorites) {
-      throw new NotFoundException('Favorites not found');
+      favorites = this.favoritesRepository.create({
+        artists: [],
+        albums: [],
+        tracks: [],
+      });
     }
 
-    if (entityType === 'artists') {
-      favorites.artists = favorites.artists.filter((id) => id !== entityId);
-    } else if (entityType === 'albums') {
-      favorites.albums = favorites.albums.filter((id) => id !== entityId);
-    } else if (entityType === 'tracks') {
-      favorites.tracks = favorites.tracks.filter((id) => id !== entityId);
-    }
-
+    favorites[entityType] = favorites[entityType].filter(
+      (id) => id !== entityId,
+    );
     await this.favoritesRepository.save(favorites);
   }
 
@@ -119,14 +114,11 @@ export class FavoritesService {
   ): Promise<boolean> {
     switch (entityType) {
       case 'artists':
-        const artist = await this.artistService.getArtistById(id);
-        return !!artist;
+        return !!(await this.artistService.getArtistById(id));
       case 'albums':
-        const album = await this.albumService.getAlbumById(id);
-        return !!album;
+        return !!(await this.albumService.getAlbumById(id));
       case 'tracks':
-        const track = await this.trackService.getTrackById(id);
-        return !!track;
+        return !!(await this.trackService.getTrackById(id));
       default:
         throw new Error(`Unsupported entity type: ${entityType}`);
     }
