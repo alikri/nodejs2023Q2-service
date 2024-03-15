@@ -23,8 +23,17 @@ services:
       POSTGRES_DB: Iamdatabase
     ports:
       - "5432:5432"
+    volumes:
+      - db_data:/var/lib/postgresql/data
+      - db_logs:/var/log/postgresql
     networks:
       - alikri_bridge_network
+
+volumes:
+  db_data:
+    driver: local
+  db_logs:  
+    driver: local
 
 networks:
   alikri_bridge_network:
