@@ -64,7 +64,6 @@ export class FavoritesService {
       tracks: tracks.filter((track) => track !== null),
     };
 
-    console.log('RESULT!!!!!!!!!!', result);
     return result;
   }
 
