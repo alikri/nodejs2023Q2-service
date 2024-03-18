@@ -7,10 +7,13 @@ while ! nc -z db 5432; do
 done
 echo "PostgreSQL started"
 
-# Start your application
-echo "Starting the application"
-npm run start
+# Check if migrations have been run already
+if [ ! -f /tmp/migrations.lock ]; then
+  echo "Running migrations"
+  npm run migration:run
+  touch /tmp/migrations.lock  
+fi
 
-# Run migrations
-echo "Running migrations"
-npx typeorm-ts-node-commonjs migration:run -d src/data-source.ts
+# Start your application in development mode
+echo "Starting the application in development mode"
+npm run start:dev
