@@ -27,7 +27,7 @@ export class TrackService {
   async getTrackById(id: string): Promise<Track | null> {
     const track = await this.trackRepository.findOneBy({ id });
     if (!track) {
-      throw new NotFoundException(`User with ID ${id} not found`);
+      return null;
     }
     return track;
   }
