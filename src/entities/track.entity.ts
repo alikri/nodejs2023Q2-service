@@ -7,6 +7,7 @@ import {
 } from 'typeorm';
 import { Artist } from './artist.entity';
 import { Album } from './album.entity';
+import { Favorites } from './favorites.entity';
 
 @Entity()
 export class Track {
@@ -32,4 +33,7 @@ export class Track {
 
   @Column('int')
   duration: number;
+
+  @ManyToOne(() => Favorites, (favorites) => favorites.tracks)
+  favorites: Favorites;
 }

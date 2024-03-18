@@ -1,16 +1,19 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import { Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { Artist } from './artist.entity';
+import { Album } from './album.entity';
+import { Track } from './track.entity';
 
 @Entity()
 export class Favorites {
-  @PrimaryGeneratedColumn('uuid')
-  id: string;
+  @PrimaryGeneratedColumn()
+  id: number;
 
-  @Column('uuid', { array: true, nullable: true })
-  artists: string[];
+  @OneToMany(() => Artist, (artist) => artist.favorites)
+  artists: Artist[];
 
-  @Column('uuid', { array: true, nullable: true })
-  albums: string[];
+  @OneToMany(() => Album, (album) => album.favorites)
+  albums: Album[];
 
-  @Column('uuid', { array: true, nullable: true })
-  tracks: string[];
+  @OneToMany(() => Track, (track) => track.favorites, { cascade: true })
+  tracks: Track[];
 }
