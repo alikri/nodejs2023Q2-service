@@ -1,6 +1,13 @@
-import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  OneToMany,
+  ManyToOne,
+} from 'typeorm';
 import { Album } from './album.entity';
 import { Track } from './track.entity';
+import { Favorites } from './favorites.entity';
 
 @Entity()
 export class Artist {
@@ -18,4 +25,7 @@ export class Artist {
 
   @OneToMany(() => Album, (album) => album.artist, { onDelete: 'SET NULL' })
   albums: Album[];
+
+  @ManyToOne(() => Favorites, (favorites) => favorites.artists)
+  favorites: Favorites;
 }
