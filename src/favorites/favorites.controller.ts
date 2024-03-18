@@ -17,8 +17,8 @@ export class FavoritesController {
   constructor(private readonly favoritesService: FavoritesService) {}
 
   @Get()
-  getFavorites() {
-    return this.favoritesService.getFavorites();
+  async getFavorites() {
+    return await this.favoritesService.getFavorites();
   }
 
   @Post('track/:id')
@@ -46,7 +46,7 @@ export class FavoritesController {
         HttpStatus.UNPROCESSABLE_ENTITY,
       );
     }
-    return this.favoritesService.addEntityToFavorites('tracks', trackId);
+    return await this.favoritesService.addEntityToFavorites('tracks', trackId);
   }
 
   @Post('album/:id')
@@ -75,7 +75,7 @@ export class FavoritesController {
       );
     }
 
-    this.favoritesService.addEntityToFavorites('albums', albumId);
+    await this.favoritesService.addEntityToFavorites('albums', albumId);
     return {
       statusCode: HttpStatus.CREATED,
       message: 'Album added to favorites',
@@ -107,7 +107,7 @@ export class FavoritesController {
         HttpStatus.UNPROCESSABLE_ENTITY,
       );
     }
-    this.favoritesService.addEntityToFavorites('artists', artistId);
+    await this.favoritesService.addEntityToFavorites('artists', artistId);
     return {
       statusCode: HttpStatus.CREATED,
       message: 'Artist added to favorites',
