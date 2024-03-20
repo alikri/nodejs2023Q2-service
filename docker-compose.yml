@@ -31,6 +31,8 @@ services:
     volumes:
       - db_data:/var/lib/postgresql/data
       - db_logs:/var/log/postgresql
+      - ./my-postgres.conf:/etc/postgresql/postgresql.conf 
+    command: ["postgres", "-c", "config_file=/etc/postgresql/postgresql.conf"]
     networks:
       - alikri_bridge_network
     restart: always 
