@@ -1,6 +1,7 @@
 version: '3.8'
 services:
   app:
+    image: library-service-app-local-build:latest
     build: .
     command: npx ts-node src/main.ts
     ports:
