@@ -23,8 +23,7 @@
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-    "vuln-scan": "npm audit",
-    "audit-fix": "npm audit fix"
+    "vuln-scan": "docker scout quickview"
   },
   "dependencies": {
     "@nestjs/common": "^8.4.7",
