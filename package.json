@@ -6,10 +6,11 @@
   "private": true,
   "license": "UNLICENSED",
   "scripts": {
-    "typeorm": "typeorm-ts-node-esm",
-    "prebuild": "rimraf dist",
     "build": "nest build",
-    "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
+    "build:docker-compose": "docker-compose build",
+    "up:local-image": "docker-compose up -d",
+    "up:dockerhub-image": "docker-compose -f docker-compose.yml -f docker-compose.prod.yml up",
+    "test:inside-docker": "docker exec -it nodejs2023q2-service-app-1 npm run test",
     "start": "nest start",
     "start:dev": "nest start --watch",
     "start:debug": "nest start --debug --watch",
@@ -23,7 +24,10 @@
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-    "vuln-scan": "docker scout quickview"
+    "vuln-scan": "docker scout quickview",
+    "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
+    "typeorm": "typeorm-ts-node-esm",
+    "prebuild": "rimraf dist"
   },
   "dependencies": {
     "@nestjs/common": "^8.4.7",
