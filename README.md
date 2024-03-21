@@ -11,7 +11,7 @@
 ```
 git clone https://github.com/alikri/nodejs2023Q2-service.git
 ```
-### Navigation to the correct filder:
+### Navigation to the correct folder:
 ```
 cd nodejs2023Q2-service
 ```
@@ -41,7 +41,7 @@ npm run seed:migrations
 ```
 ### Run tests inside the app:
 ```
-npm run test:inside-docker
+npm run test
 ```
 ### Run vulnerability scan:
 ```
