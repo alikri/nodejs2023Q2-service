@@ -7,38 +7,55 @@
 
 ## In order to perform a cross-check review, please follow the steps:
 
+### Downloading:
 ```
 git clone https://github.com/alikri/nodejs2023Q2-service.git
 ```
+### Navigation to the correct filder:
 ```
-git checkout library-part1
+cd nodejs2023Q2-service
 ```
+### Navigation to the correct branch:
+```
+git checkout library-part2
+```
+### Installing NPM modules
 ```
 npm install
 ```
+### Creating local vartiables from example file:
 ```
 cp .env.example .env
 ```
+### Build docker-compose: 
 ```
-npm run start
+npm run build:docker-compose
 ```
+### Run docker-compose:
 ```
-npm run test
+npm run up
+```
+### Run Database Migrations:
+```
+npm run seed:migrations
+```
+### Run tests inside the app:
+```
+npm run test:inside-docker
+```
+### Run vulnerability scan:
+```
+npm run vuln-scan
+```
+### Shut Down Docker Containers
+```
+npm run down
 ```
 
-to open swagger follow the link:  [http://localhost:4000/doc/](http://localhost:4000/doc/) 
 
-to check for lint errors:
+### to open swagger follow the link:  [http://localhost:4000/doc/](http://localhost:4000/doc/) 
+
+### Check for lint errors:
 ```
 npm run lint
 ```
-
-to generate migrations:
-npx ts-node ./node_modules/typeorm/cli.js migration:generate -d ./src/data-source.ts ./src/migrations/InitialMigrationTable
-
-to run migrations:
-
-npx typeorm-ts-node-commonjs migration:run -d src/data-source.ts
-
-
-docker run --name postgres-container -e POSTGRES_USER=Iamuser -e POSTGRES_PASSWORD=Iampassword -e POSTGRES_DB=Iamdatabase -p 5432:5432 -d postgres
