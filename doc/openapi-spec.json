@@ -1,0 +1,708 @@
+{
+  "openapi": "3.0.0",
+  "paths": {
+    "/user": {
+      "get": {
+        "operationId": "UserController_getAllUsers",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      },
+      "post": {
+        "operationId": "UserController_createUser",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "login": {
+                    "type": "string",
+                    "example": "nickname"
+                  },
+                  "password": {
+                    "type": "string",
+                    "example": "nickname12345!"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/user/{id}": {
+      "get": {
+        "operationId": "UserController_getUserById",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "example": "a0a659c7-95c8-4c4b-9c5a-69d4e36ba578",
+            "description": "The UUID of the user",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      },
+      "put": {
+        "operationId": "UserController_updatePassword",
+        "summary": "Change password",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "description": "Provide old and new password",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdatePasswordDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      },
+      "delete": {
+        "operationId": "UserController_deleteUser",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "example": "a0a659c7-95c8-4c4b-9c5a-69d4e36ba578",
+            "description": "The UUID of the user",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/artist": {
+      "get": {
+        "operationId": "ArtistController_getAllArtists",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      },
+      "post": {
+        "operationId": "ArtistController_createArtist",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "example": "Miley Cyrus"
+                  },
+                  "grammy": {
+                    "type": "boolean",
+                    "example": "true"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/artist/{id}": {
+      "get": {
+        "operationId": "ArtistController_getArtistById",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "example": "a0a659c7-95c8-4c4b-9c5a-69d4e36ba578",
+            "description": "The UUID of the artist",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      },
+      "put": {
+        "operationId": "ArtistController_updateArtist",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "example": "a0a659c7-95c8-4c4b-9c5a-69d4e36ba578",
+            "description": "The UUID of the artist",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "grammy": {
+                    "type": "boolean",
+                    "example": "false"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      },
+      "delete": {
+        "operationId": "ArtistController_deleteArtist",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "example": "a0a659c7-95c8-4c4b-9c5a-69d4e36ba578",
+            "description": "The UUID of the artist",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/track": {
+      "get": {
+        "operationId": "TrackController_getAllTracks",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      },
+      "post": {
+        "operationId": "TrackController_createTrack",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "description": "Create a new track",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateTrackDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/track/{id}": {
+      "get": {
+        "operationId": "TrackController_getTrackById",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      },
+      "put": {
+        "operationId": "TrackController_updateTrack",
+        "summary": "Update track information",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "description": "Payload to update a track",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateTrackDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      },
+      "delete": {
+        "operationId": "TrackController_deleteTrack",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "example": "a0a659c7-95c8-4c4b-9c5a-69d4e36ba578",
+            "description": "The UUID of the track",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/album": {
+      "get": {
+        "operationId": "AlbumController_findAllAlbums",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      },
+      "post": {
+        "operationId": "AlbumController_createAlbum",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "description": "Create a new album",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateAlbumDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/album/{id}": {
+      "get": {
+        "operationId": "AlbumController_getArtistById",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "example": "a0a659c7-95c8-4c4b-9c5a-69d4e36ba578",
+            "description": "The UUID of the album",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      },
+      "put": {
+        "operationId": "AlbumController_updateAlbum",
+        "summary": "Update album information",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "description": "Payload to update album",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateAlbumDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      },
+      "delete": {
+        "operationId": "AlbumController_deleteArtist",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "example": "a0a659c7-95c8-4c4b-9c5a-69d4e36ba578",
+            "description": "The UUID of the album",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/favs": {
+      "get": {
+        "operationId": "FavoritesController_getFavorites",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/favs/track/{id}": {
+      "post": {
+        "operationId": "FavoritesController_addTrackToFavorites",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "example": "a0a659c7-95c8-4c4b-9c5a-69d4e36ba578",
+            "description": "The UUID of the track",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        }
+      },
+      "delete": {
+        "operationId": "FavoritesController_removeTrackFromFavorites",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "example": "a0a659c7-95c8-4c4b-9c5a-69d4e36ba578",
+            "description": "The UUID of the track",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/favs/album/{id}": {
+      "post": {
+        "operationId": "FavoritesController_addAlbumToFavorites",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "example": "a0a659c7-95c8-4c4b-9c5a-69d4e36ba578",
+            "description": "The UUID of the album",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        }
+      },
+      "delete": {
+        "operationId": "FavoritesController_removeAlbumFromFavorites",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "example": "a0a659c7-95c8-4c4b-9c5a-69d4e36ba578",
+            "description": "The UUID of the album",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/favs/artist/{id}": {
+      "post": {
+        "operationId": "FavoritesController_addArtistToFavorites",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "example": "a0a659c7-95c8-4c4b-9c5a-69d4e36ba578",
+            "description": "The UUID of the artist",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        }
+      },
+      "delete": {
+        "operationId": "FavoritesController_removeArtistFromFavorites",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "example": "a0a659c7-95c8-4c4b-9c5a-69d4e36ba578",
+            "description": "The UUID of the artist",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": ""
+          }
+        }
+      }
+    }
+  },
+  "info": {
+    "title": "Example API",
+    "description": "API description",
+    "version": "1.0",
+    "contact": {}
+  },
+  "tags": [],
+  "servers": [],
+  "components": {
+    "schemas": {
+      "UpdatePasswordDto": {
+        "type": "object",
+        "properties": {
+          "oldPassword": {
+            "type": "string",
+            "example": "nickname12345!",
+            "description": "The current password of the user."
+          },
+          "newPassword": {
+            "type": "string",
+            "example": "NewPassword456!",
+            "description": "The new password for the user. Must not be empty."
+          }
+        },
+        "required": [
+          "oldPassword",
+          "newPassword"
+        ]
+      },
+      "CreateTrackDto": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "Flowers"
+          },
+          "artistId": {
+            "type": "string",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000",
+            "nullable": true
+          },
+          "albumId": {
+            "type": "string",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000",
+            "nullable": true
+          },
+          "duration": {
+            "type": "number",
+            "example": 202
+          }
+        },
+        "required": [
+          "name",
+          "artistId",
+          "albumId",
+          "duration"
+        ]
+      },
+      "UpdateTrackDto": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "Updated Song Name"
+          },
+          "artistId": {
+            "type": "string",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "albumId": {
+            "type": "string",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "duration": {
+            "type": "number",
+            "example": 320
+          }
+        }
+      },
+      "CreateAlbumDto": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Name of the album",
+            "example": "The Dark Side of the Moon"
+          },
+          "year": {
+            "type": "number",
+            "description": "Release year of the album",
+            "minimum": 1900,
+            "maximum": 2024,
+            "example": 1973
+          },
+          "artistId": {
+            "type": "string",
+            "format": "uuid of the existing artistID or null",
+            "description": "Artist ID associated with the album",
+            "example": null
+          }
+        },
+        "required": [
+          "name",
+          "year"
+        ]
+      },
+      "UpdateAlbumDto": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "Updated Album Name"
+          },
+          "year": {
+            "type": "number",
+            "example": 2023,
+            "minimum": 1900,
+            "maximum": 2024
+          },
+          "artistId": {
+            "type": "string",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          }
+        }
+      }
+    }
+  }
+}

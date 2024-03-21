@@ -1,0 +1,48 @@
+version: '3.8'
+services:
+  app:
+    image: alikri/libary-service-app:v1.0
+    command: npx ts-node src/main.ts
+    ports:
+      - "${APP_PORT}:4000"
+    environment:
+      DB_HOST: ${DB_HOST}
+      DB_PORT: ${DB_PORT}
+      DB_USERNAME: ${DB_USERNAME}
+      DB_PASSWORD: ${DB_PASSWORD}
+      DB_NAME: ${DB_NAME}
+    volumes:
+      - .:/app
+      - /app/node_modules
+    depends_on:
+      - db
+    networks:
+      - alikri_bridge_network
+    restart: always
+
+  db:
+    image: postgres
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    ports:
+      - "${POSTGRES_PORT}:5432"
+    volumes:
+      - db_data:/var/lib/postgresql/data
+      - db_logs:/var/log/postgresql
+      - ./my-postgres.conf:/etc/postgresql/postgresql.conf 
+    command: ["postgres", "-c", "config_file=/etc/postgresql/postgresql.conf"]
+    networks:
+      - alikri_bridge_network
+    restart: always 
+
+volumes:
+  db_data:
+    driver: local
+  db_logs:  
+    driver: local
+
+networks:
+  alikri_bridge_network:
+    driver: bridge
