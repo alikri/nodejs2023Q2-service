@@ -39,7 +39,7 @@ npm run up
 ```
 npm run seed:migrations
 ```
-### Run tests inside the app:
+### Run tests:
 ```
 npm run test
 ```
