@@ -27,10 +27,6 @@ npm install
 ```
 cp .env.example .env
 ```
-### Build docker-compose: 
-```
-npm run build:docker-compose
-```
 ### Run docker-compose:
 ```
 npm run up
