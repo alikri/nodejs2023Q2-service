@@ -8,8 +8,9 @@
   "scripts": {
     "build": "nest build",
     "build:docker-compose": "docker-compose build",
-    "up:local-image": "docker-compose up -d",
-    "up:dockerhub-image": "docker-compose -f docker-compose.yml -f docker-compose.prod.yml up",
+    "up": "docker-compose up -d",
+    "down": "docker-compose down",
+    "seed:migrations": "docker-compose exec app npm run migration:run",
     "test:inside-docker": "docker exec -it nodejs2023q2-service-app-1 npm run test",
     "start": "nest start",
     "start:dev": "nest start --watch",
